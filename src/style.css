@@ -1,0 +1,47 @@
+.section {
+  padding: 0rem 0rem;
+}
+
+.red {
+  background-color: red;
+}
+
+.rightgreen {
+  background-color: rgb(172, 198, 65);
+}
+
+.title {
+  color: white;
+}
+
+img {
+  height: 20vh;
+  object-fit: contain;
+}
+
+.column {
+  overflow-x: scroll;
+}
+
+.isHover caption {
+  text-align: center;
+  color: white;
+}
+
+.isHover .mask {
+  width: max-content;
+  height: max-content;
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.isHover :hover {
+  opacity: 0.4;
+}
+
+.isHover:hover .mask {
+  opacity: 1;
+}
