@@ -5,11 +5,16 @@
 }
 
 .column {
-  padding: 1.5em;
+  padding: 2em;
 }
 
 .section {
   padding: 0rem 0rem 2rem;
+}
+
+select {
+  font-size: 15px;
+  border: 10px;
 }
 
 .red {

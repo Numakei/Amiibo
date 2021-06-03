@@ -3,7 +3,7 @@ import { fetchImages } from "./api";
 import { fetchNames } from "./Nameapi";
 import CharaImage from "./image";
 
-function Header() {
+function Header({ order, setOrder }) {
   return (
     <header className="hero is-danger is-bold">
       <div className="hero-body red">
@@ -15,10 +15,10 @@ function Header() {
         <select
           name="orders"
           id="order-select"
-          onchange="createOrder(this.value)"
+          onChange={(e) => setOrder(e.target.value)}
         >
           <option value="default">default</option>
-          <option value="abcorder">ABC order</option>
+          <option value="abc">ABC order</option>
         </select>
       </div>
     </header>
@@ -31,10 +31,8 @@ function Contents(name) {
     fetchImages(name.name).then((data) => {
       setData(data.amiibo);
     });
-  }, []);
+  }, [name]);
 
-  //console.log(name);
-  console.log(data);
   return (
     <div>
       <section className="section">
@@ -47,7 +45,7 @@ function Contents(name) {
           <div class="columns">
             {data.map((item, key) => {
               return (
-                <div class="column is-1">
+                <div class="column is-2" key={key}>
                   <CharaImage name={item} />
                 </div>
               );
@@ -59,28 +57,34 @@ function Contents(name) {
   );
 }
 
-function Main(name) {
+function Main({ name, order }) {
   const [names, setNames] = useState([]);
   useEffect(() => {
-    fetchNames(name.name).then((names) => {
-      setNames(names.amiibo);
+    fetchNames(name).then((names) => {
+      const abc = Array.from(new Set(names.amiibo.map(({ name }) => name)));
+      if (order === "abc") {
+        abc.sort();
+      }
+      setNames(abc);
     });
-  }, []);
-  const gameserieses = Array.from(new Set(names.map(({ name }) => name)));
-  const abcorder = Array.from(new Set(names.map(({ name }) => name)));
-  abcorder.sort();
-  //console.log(abcorder);
-  const select = document.getElementById("order-select");
+  }, [order]);
   return (
     <div>
-      {gameserieses.map((item, key) => {
+      {names.map((item, key) => {
+        return (
+          <div>
+            <Contents name={item} />
+          </div>
+        );
+      })}
+      {/* { {gameseries.name.map((item, key) => {
         //console.log(item);
         return (
           <div key={key}>
             <Contents name={item} />
           </div>
         );
-      })}
+      })} } */}
     </div>
   );
 }
@@ -99,10 +103,18 @@ function Footer() {
 }
 
 function App() {
+  const [order, setOrder] = useState("default");
+
+  const handleChange = (order) => {
+    setOrder(order);
+  };
+
+  console.log(order);
+
   return (
     <div>
-      <Header />
-      <Main />
+      <Header setOrder={handleChange} order={order} />
+      <Main order={order} />
       <Footer />
     </div>
   );
