@@ -1,5 +1,15 @@
+.selectBox {
+  margin: 0, 0, 0, auto;
+  text-align: right;
+  background-color: red;
+}
+
+.column {
+  padding: 1.5em;
+}
+
 .section {
-  padding: 0rem 0rem;
+  padding: 0rem 0rem 2rem;
 }
 
 .red {

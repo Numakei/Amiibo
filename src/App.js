@@ -11,6 +11,16 @@ function Header() {
           <h1 className="title">amiibo</h1>
         </div>
       </div>
+      <div className="selectBox">
+        <select
+          name="orders"
+          id="order-select"
+          onchange="createOrder(this.value)"
+        >
+          <option value="default">default</option>
+          <option value="abcorder">ABC order</option>
+        </select>
+      </div>
     </header>
   );
 }
@@ -57,10 +67,14 @@ function Main(name) {
     });
   }, []);
   const gameserieses = Array.from(new Set(names.map(({ name }) => name)));
+  const abcorder = Array.from(new Set(names.map(({ name }) => name)));
+  abcorder.sort();
+  //console.log(abcorder);
+  const select = document.getElementById("order-select");
   return (
     <div>
       {gameserieses.map((item, key) => {
-        console.log(item);
+        //console.log(item);
         return (
           <div key={key}>
             <Contents name={item} />
